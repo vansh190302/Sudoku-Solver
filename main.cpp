@@ -44,28 +44,27 @@ cout << "---";
 cout << endl;
 }
 }
-bool findEmptyPlace(int &row, int &col){ //we will find empty location and update row and column
+bool findEmptyPlace(int &row, int &col){
 for (row = 0; row < N; row++)
 for (col = 0; col < N; col++)
-if (grid[row][col] == 0) //empty = 0
+if (grid[row][col] == 0)
 return true;
 return false;
 }
 bool isValidPlace(int row, int col, int num){
-//when number is not found in col, row and current box
 return !isPresentInRow(row, num) && !isPresentInCol(col, num) &&
 !isPresentInBox(row - row%3 , col - col%3, num);
 }
 bool solveSudoku(){
 int row, col;
 if (!findEmptyPlace(row, col))
-return true; //if all places are filled
-for (int num = 1; num <= 9; num++){
-if (isValidPlace(row, col, num)){ //check if conditions are met
-grid[row][col] = num;
-if (solveSudoku()) // go for others in the grid
 return true;
-grid[row][col] = 0; //turn to unassigned space when conditions are not completed
+for (int num = 1; num <= 9; num++){
+if (isValidPlace(row, col, num)){
+grid[row][col] = num;
+if (solveSudoku())
+return true;
+grid[row][col] = 0;
 }
 }
 return false;
@@ -74,5 +73,5 @@ int main(){
 if (solveSudoku() == true)
 sudokuGrid();
 else
-cout << "No solution exists";
+cout << "There is no such solution for the grid";
 }
